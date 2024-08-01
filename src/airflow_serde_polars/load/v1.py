@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 _version = find_version(__file__)
 
 
-def deserialize(classname: str, version: int, data: object) -> pl.DataFrame | pl.Series:  # noqa: D103
+def deserialize(classname: str, version: int, data: object) -> pl.DataFrame | pl.Series:
     if version > _version:
         error_msg = f"serialized {version} of {classname} > {_version}"
         raise TypeError(error_msg)

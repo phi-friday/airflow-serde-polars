@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     import polars as pl
 
 
-def deserialize(classname: str, version: int, data: object) -> pl.DataFrame | pl.Series:  # noqa: D103
+def deserialize(classname: str, version: int, data: object) -> pl.DataFrame | pl.Series:
     from airflow_serde_polars.load.v1 import deserialize as v1_deserialize
 
     if not isinstance(data, str) or not data.endswith("_salt"):

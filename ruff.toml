@@ -90,7 +90,9 @@ ignore = [
 ]
 
 [lint.per-file-ignores]
-"./tests/**/*.py" = [
+"src/airflow_serde_polars/dump/v*.py" = ["D103"]
+"src/airflow_serde_polars/load/v*.py" = ["D103"]
+"tests/**/*.py" = [
     "TCH001",
     "TCH002",
     "TCH003",

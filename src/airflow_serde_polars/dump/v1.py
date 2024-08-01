@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 _version = find_version(__file__)
 
 
-def serialize(o: object) -> tuple[U, str, int, bool]:  # noqa: D103 # pyright: ignore[reportUnknownParameterType]
+def serialize(o: object) -> tuple[U, str, int, bool]:  # pyright: ignore[reportUnknownParameterType]
     from io import BytesIO
 
     import polars as pl

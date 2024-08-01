@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from airflow.serialization.serde import U
 
 
-def serialize(o: object) -> tuple[U, str, int, bool]:  # noqa: D103 # pyright: ignore[reportUnknownParameterType]
+def serialize(o: object) -> tuple[U, str, int, bool]:  # pyright: ignore[reportUnknownParameterType]
     from airflow_serde_polars.dump.v1 import serialize as v1_serialize
 
     result, name, *_ = v1_serialize(o)
