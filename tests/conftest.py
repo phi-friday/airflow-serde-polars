@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture(
-    params=[pytest.param(version, id=f"v{version}") for version in (1,)],
+    params=[pytest.param(version, id=f"v{version}") for version in range(2)],
     scope="session",
 )
 def serde_version(request: pytest.FixtureRequest) -> int:
