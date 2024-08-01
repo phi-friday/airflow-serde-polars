@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import re
+from functools import lru_cache
+from itertools import chain
 from pathlib import Path
 
 __all__ = ["find_version"]
@@ -8,7 +10,7 @@ __all__ = ["find_version"]
 _RE_VERSION = re.compile(r"v(?P<version>\d+)")
 
 
-def find_version(file: str) -> int:
+def find_version(file: str | Path) -> int:
     """Find the version of the serializer/deserializer.
 
     Args:
@@ -24,3 +26,14 @@ def find_version(file: str) -> int:
 
     version = match.group("version")
     return int(version)
+
+
+@lru_cache
+def get_latest_version() -> int:
+    """Get the latest version of the serializer/deserializer."""
+    dump = Path(__file__).parent.with_name("dump")
+    load = dump.with_name("load")
+
+    return max(
+        find_version(file) for file in chain(dump.glob("v*.py"), load.glob("v*.py"))
+    )
