@@ -89,6 +89,21 @@ ignore = [
     "D104", # undocumented-public-package
 ]
 
+[lint.per-file-ignores]
+"./tests/**/*.py" = [
+    "TCH001",
+    "TCH002",
+    "TCH003",
+    "S101",
+    "D101",
+    "ANN001",
+    "ANN201",
+    "PLR0133",
+    "W605",
+    "D103",
+    "D102",
+    "PLR2004",
+]
 
 [format]
 indent-style = "space"

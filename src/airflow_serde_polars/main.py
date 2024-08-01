@@ -33,7 +33,7 @@ def load_serializer(version: float | str) -> Serializer:
         version = version.strip()
     version = int(version)
 
-    module_name = f"airflow_serde_polars.load.v{version}"
+    module_name = f"airflow_serde_polars.dump.v{version}"
     module = import_module(module_name)
     return module.serialize
 
@@ -51,6 +51,6 @@ def load_deserializer(version: float | str) -> Deserializer:
         version = version.strip()
     version = int(version)
 
-    module_name = f"airflow_serde_polars.dump.v{version}"
+    module_name = f"airflow_serde_polars.load.v{version}"
     module = import_module(module_name)
-    return module.serialize
+    return module.deserialize

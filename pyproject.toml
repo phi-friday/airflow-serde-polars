@@ -2,18 +2,16 @@
 name = "airflow-serde-polars"
 version = "0.1.0"
 description = "Add your description here"
-authors = [
-    { name = "phi", email = "phi.friday@gmail.com" }
-]
+authors = [{ name = "phi", email = "phi.friday@gmail.com" }]
 readme = "README.md"
 requires-python = ">= 3.8"
-dependencies = [
-    "polars[pyarrow]>=1.0.0",
-]
+dependencies = ["polars[pyarrow]>=1.0.0"]
 
 [project.optional-dependencies]
 test = [
-    "apache-airflow>=2.8.1", # support pep440
+    # support pep440
+    "apache-airflow>=2.8.1",
+    "pytest>=8.3.2",
 ]
 
 [build-system]
@@ -25,6 +23,8 @@ managed = true
 dev-dependencies = [
     "airflow-serde-polars[test]",
     "ruff==0.5.5",
+    "pre-commit>=3.5.0",
+    "ipykernel>=6.29.5",
 ]
 [tool.rye.scripts]
 lint = { chain = ["lint:check", "lint:format"] }
