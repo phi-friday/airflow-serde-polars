@@ -31,9 +31,16 @@ def find_version(file: str | Path) -> int:
 @lru_cache
 def get_latest_version() -> int:
     """Get the latest version of the serializer/deserializer."""
+    versions = get_versions_all()
+    return max(versions)
+
+
+@lru_cache
+def get_versions_all() -> tuple[int, ...]:
+    """Get all the versions of the serializer/deserializer."""
     dump = Path(__file__).parent.with_name("dump")
     load = dump.with_name("load")
 
-    return max(
+    return tuple({
         find_version(file) for file in chain(dump.glob("v*.py"), load.glob("v*.py"))
-    )
+    })

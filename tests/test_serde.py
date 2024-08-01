@@ -2,10 +2,13 @@
 # pyright: reportUnknownParameterType=false
 from __future__ import annotations
 
+from itertools import permutations
+
 import polars as pl
 import pytest
 
 from airflow_serde_polars import load_deserializer, load_serializer
+from airflow_serde_polars.utils.parse import get_versions_all
 
 
 @pytest.fixture(scope="module")
@@ -47,3 +50,19 @@ def test_serde_series(polars_frame, serializer, deserializer):
 
         assert isinstance(load, pl.Series)
         assert field.equals(load)
+
+
+@pytest.mark.parametrize(
+    "versions",
+    (
+        pytest.param((v1, v2), id=f"[ser={v1},de={v2}]")
+        for v1, v2 in permutations(get_versions_all(), 2)
+    ),
+)
+def test_serde_diff_version_error(polars_frame, versions: tuple[int, int]):
+    serializer = load_serializer(versions[0])
+    deserializer = load_deserializer(versions[1])
+
+    value, classname, version, _ = serializer(polars_frame)
+    with pytest.raises((TypeError, ValueError)):
+        deserializer(classname, version, value)

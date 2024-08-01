@@ -4,12 +4,16 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from airflow_serde_polars.utils.parse import get_versions_all
+
 if TYPE_CHECKING:
     from airflow_serde_polars.main import Deserializer, Serializer
 
+_versions_all = get_versions_all()
+
 
 @pytest.fixture(
-    params=[pytest.param(version, id=f"v{version}") for version in range(2)],
+    params=[pytest.param(version, id=f"v{version}") for version in _versions_all],
     scope="session",
 )
 def serde_version(request: pytest.FixtureRequest) -> int:
