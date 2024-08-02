@@ -1,6 +1,6 @@
 [project]
 name = "airflow-serde-polars"
-version = "0.1.0"
+version = "0.0.0"
 description = "Add your description here"
 authors = [{ name = "phi", email = "phi.friday@gmail.com" }]
 readme = "README.md"

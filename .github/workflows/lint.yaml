@@ -1,0 +1,49 @@
+name: lint
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - "**.py"
+      - ".github/workflows/lint.yaml"
+      - "pyproject.toml"
+      - "pyrightconfig.json"
+      - ".pre-commit-config.yaml"
+  pull_request:
+    branches: [dev, main]
+    paths:
+      - "**.py"
+      - ".github/workflows/lint.yaml"
+      - "pyproject.toml"
+      - "pyrightconfig.json"
+      - ".pre-commit-config.yaml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install rye
+        uses: phi-friday/install-rye@v1.5
+        id: install-rye
+        with:
+          python_version: "3.8"
+          use_uv: true
+
+      - name: Load cached venv
+        id: cached-venv-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.install-rye.outputs.python-version }}-${{ hashFiles('**/pyproject.toml') }}
+
+      - name: Install dependencies
+        if: steps.cached-venv-dependencies.outputs.cache-hit != 'true'
+        run: |
+          rye sync
+
+      - name: Code checks
+        run: |
+          rye run pre-commit run --all-files --show-diff-on-failure
