@@ -14,7 +14,6 @@ on:
       - ".github/workflows/check.yaml"
       - "pyproject.toml"
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,32 +23,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        id: setup-python
-        with:
-          python-version: ${{ matrix.python-version }} 
       
-      - id: echo-python-path
-        run: |
-          export PYTHON_PATH=$(python -c "import sys; print(sys.executable)")
-          export PYTHON_VERSION=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}')")
-          echo "PYTHON_PATH=$PYTHON_PATH" >> $GITHUB_OUTPUT
-          echo "PYTHON_VERSION=$PYTHON_VERSION" >> $GITHUB_OUTPUT
-
       - name: Install rye
         uses: phi-friday/install-rye@v1.5
         id: install-rye
+        with:
+          python_version: ${{ matrix.python-version }}
+          use_uv: true
 
       - name: Install dependencies
         run: |
           rye install uv
           rye build
+          rye lock # init venv
+          export UV_PYTHON=$(rye run python -c "import sys; print(sys.executable)")
           uv pip compile pyproject.toml -o requirements.txt --extra test
-          export UV_PYTHON=${{ steps.echo-python-path.outputs.PYTHON_PATH }}
-          uv venv
-          uv pip install -r requirements.txt
-          uv pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl
+          rye run python -m ensurepip
+          rye run python -m pip install -r requirements.txt
+          rye run python -m pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl
 
       - name: Test with pytest
         run: |
