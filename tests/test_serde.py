@@ -6,6 +6,7 @@ from itertools import permutations
 
 import polars as pl
 import pytest
+from airflow.serialization.serde import deserialize, serialize
 
 from airflow_serde_polars import load_deserializer, load_serializer
 from airflow_serde_polars.utils.parse import get_versions_all
@@ -66,3 +67,22 @@ def test_serde_diff_version_error(polars_frame, versions: tuple[int, int]):
     value, classname, version, _ = serializer(polars_frame)
     with pytest.raises((TypeError, ValueError)):
         deserializer(classname, version, value)
+
+
+@pytest.mark.airflow()
+def test_serde_frame_airflow(polars_frame):
+    value = serialize(polars_frame)
+    assert isinstance(value, dict)
+    load = deserialize(value)
+    assert isinstance(load, pl.DataFrame)
+    assert polars_frame.equals(load)
+
+
+@pytest.mark.airflow()
+def test_serde_series_airflow(polars_frame):
+    for field in polars_frame.iter_columns():
+        value = serialize(field)
+        assert isinstance(value, dict)
+        load = deserialize(value)
+        assert isinstance(load, pl.Series)
+        assert field.equals(load)

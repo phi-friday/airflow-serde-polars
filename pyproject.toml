@@ -37,3 +37,9 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/airflow_serde_polars", "src/airflow/serialization/serializers"]
+
+[tool.pytest.ini_options]
+addopts = "-m 'not airflow'"
+markers = [
+    "airflow: mark test to run only when apache-airflow is installed",
+]
