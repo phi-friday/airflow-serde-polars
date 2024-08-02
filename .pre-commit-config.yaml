@@ -1,0 +1,23 @@
+repos:
+  - hooks:
+      - id: ruff
+        name: ruff-lint
+    repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.5
+
+  - hooks:
+      - id: ruff-format
+        name: ruff-format
+        args: [--check]
+    repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.5
+
+  - hooks:
+      - id: pyright
+        entry: pyright
+        pass_filenames: false
+        types: [python]
+        args:
+          - "--pythonpath=.venv/bin/python"
+    repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.374
