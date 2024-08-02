@@ -1,11 +1,24 @@
 [project]
 name = "airflow-serde-polars"
 version = "0.0.0"
-description = "Add your description here"
+description = "Apache Airflow serialization plugin using Polars"
 authors = [{ name = "phi", email = "phi.friday@gmail.com" }]
 readme = "README.md"
 requires-python = ">= 3.8"
 dependencies = ["polars[pyarrow]>=1.0.0"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+
+[project.urls]
+Repository = "https://github.com/phi-friday/airflow-serde-polars"
 
 [project.optional-dependencies]
 test = [
