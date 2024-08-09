@@ -26,11 +26,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install rye
-        uses: phi-friday/install-rye@v1.5
+        uses: phi-friday/install-rye@v2
         id: install-rye
         with:
           python_version: "3.8"
-          use_uv: true
 
       - name: Load cached venv
         id: cached-venv-dependencies
