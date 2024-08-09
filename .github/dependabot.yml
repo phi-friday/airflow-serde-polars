@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    allow:
+      - dependency-name: ruff
+      - dependency-name: pytest
+      - dependency-name: pre-commit
+      - dependency-name: ipykernel
+    commit-message:
+      prefix: "chore(dependabot): "
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
