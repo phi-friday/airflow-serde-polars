@@ -40,22 +40,23 @@ jobs:
           export UV_PYTHON=$(rye run python -c "import sys; print(sys.executable)")
           uv pip compile pyproject.toml -o requirements.txt --extra test
 
-      - name: Load cached venv
-        id: cached-venv-dependencies
-        uses: actions/cache@v4
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.install-rye.outputs.python-version }}-${{ hashFiles('**/requirements.txt') }}
+      # - name: Load cached venv
+      #   id: cached-venv-dependencies
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: .venv
+      #     key: venv-${{ runner.os }}-${{ steps.install-rye.outputs.python-version }}-${{ hashFiles('**/requirements.txt') }}
 
       - name: Install dependencies
-        if: steps.cached-venv-dependencies.outputs.cache-hit != 'true'
+        # if: steps.cached-venv-dependencies.outputs.cache-hit != 'true'
         run: |
-          rye run python -m ensurepip
-          rye run python -m pip install -r requirements.txt
+          export UV_PYTHON=$(rye run python -c "import sys; print(sys.executable)")
+          uv pip install -r requirements.txt
 
       - name: Install self
         run: |
-          rye run python -m pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl --force-reinstall
+          export UV_PYTHON=$(rye run python -c "import sys; print(sys.executable)")
+          uv pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl --reinstall-package airflow-serde-polars
 
       - name: Test with pytest
         run: |
