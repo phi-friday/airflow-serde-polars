@@ -8,6 +8,7 @@ requires-python = ">= 3.8"
 dependencies = [
     "polars[pyarrow]>=1.0.0",
     "typing-extensions>=4.4",
+    "pyarrow",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
