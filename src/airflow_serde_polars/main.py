@@ -6,10 +6,10 @@ from typing import TYPE_CHECKING, Protocol
 if TYPE_CHECKING:
     import polars as pl
 
-    from airflow_serde_polars.utils.typing import AirflowSerdeResponse
+    from airflow_serde_polars.utils.typing import AirflowSerdeResult
 
     class Serializer(Protocol):
-        def __call__(self, o: object) -> AirflowSerdeResponse: ...
+        def __call__(self, o: object) -> AirflowSerdeResult: ...
 
     class Deserializer(Protocol):
         def __call__(

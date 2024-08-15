@@ -13,9 +13,9 @@ if TYPE_CHECKING:
     )
     T2 = TypeVar("T2", infer_variance=True, bound="AirflowSerdeType", default=Any)
 
-    AirflowSerdeResponse: TypeAlias = Tuple[T, str, int, bool]
+    AirflowSerdeResult: TypeAlias = Tuple[T, str, int, bool]
     AirflowSerdeType: TypeAlias = Union[
         bool, float, int, Dict[Any, T2], List[T2], str, Tuple[T2, ...], Set[T2]
     ]
 
-ErrorResponse: AirflowSerdeResponse[Any] = ("", "", 0, False)
+ErrorResult: AirflowSerdeResult[Any] = ("", "", 0, False)
