@@ -5,6 +5,7 @@ from __future__ import annotations
 from itertools import permutations
 
 import polars as pl
+import pyarrow as pa
 import pytest
 from airflow.serialization.serde import deserialize, serialize
 
@@ -24,6 +25,14 @@ def polars_frame() -> pl.DataFrame:
         )
         .with_columns(pl.col("string").cast(pl.Binary()).alias("binary"))
     )
+
+
+@pytest.fixture(scope="module")
+def pa_table() -> pa.Table:
+    n_legs = pa.array([2, 4, 5, 100])
+    animals = pa.array(["Flamingo", "Horse", "Brittle stars", "Centipede"])
+    names = ["n_legs", "animals"]
+    return pa.Table.from_arrays([n_legs, animals], names=names)
 
 
 def test_load_serializer(serde_version):
@@ -86,3 +95,14 @@ def test_serde_series_airflow(polars_frame):
         load = deserialize(value)
         assert isinstance(load, pl.Series)
         assert field.equals(load)
+
+
+def test_serde_pa_table(serde_version: int, pa_table: pa.Table):
+    if serde_version < 2:
+        pytest.skip("pyarrow.Table is not supported in this version")
+
+    value = serialize(pa_table)
+    assert isinstance(value, dict)
+    load = deserialize(value)
+    assert isinstance(load, pa.Table)
+    assert pa_table.equals(load)
