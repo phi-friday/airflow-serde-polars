@@ -14,12 +14,17 @@ def serialize(o: object) -> tuple[U, str, int, bool]:  # pyright: ignore[reportU
     from io import BytesIO
 
     import polars as pl
+    import pyarrow as pa
     from airflow.utils.module_loading import qualname
+
+    name = qualname(o)
+
+    if isinstance(o, pa.Table):
+        o = pl.from_arrow(o)
 
     if not isinstance(o, (pl.DataFrame, pl.Series)):
         return "", "", 0, False
 
-    name = qualname(o)
     if isinstance(o, pl.Series):
         o = o.to_frame(o.name)
 

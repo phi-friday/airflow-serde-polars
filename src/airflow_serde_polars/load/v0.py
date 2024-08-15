@@ -4,9 +4,12 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     import polars as pl
+    import pyarrow as pa
 
 
-def deserialize(classname: str, version: int, data: object) -> pl.DataFrame | pl.Series:
+def deserialize(  # pyright: ignore[reportUnknownParameterType]
+    classname: str, version: int, data: object
+) -> pl.DataFrame | pl.Series | pa.Table:
     from airflow_serde_polars.load.v1 import deserialize as v1_deserialize
 
     if not isinstance(data, str) or not data.endswith("_salt"):
