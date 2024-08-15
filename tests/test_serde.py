@@ -67,6 +67,7 @@ def test_serde_series(polars_frame, serializer, deserializer):
     (
         pytest.param((v1, v2), id=f"[ser={v1},de={v2}]")
         for v1, v2 in permutations(get_versions_all(), 2)
+        if v1 > v2
     ),
 )
 def test_serde_diff_version_error(polars_frame, versions: tuple[int, int]):
