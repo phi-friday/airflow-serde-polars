@@ -7,9 +7,10 @@ if TYPE_CHECKING:
     import polars as pl
     from airflow.serialization.serde import U
 
+    from airflow_serde_polars.utils.typing import AirflowSerdeResponse
+
     class Serializer(Protocol):
-        def __call__(self, o: object) -> tuple[U, str, int, bool]:  # pyright: ignore[reportUnknownParameterType]
-            ...
+        def __call__(self, o: object) -> AirflowSerdeResponse[U]: ...  # pyright: ignore[reportUnknownParameterType]
 
     class Deserializer(Protocol):
         def __call__(

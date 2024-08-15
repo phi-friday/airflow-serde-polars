@@ -3,14 +3,15 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, cast
 
 from airflow_serde_polars.utils.parse import find_version
+from airflow_serde_polars.utils.typing import ErrorResponse
 
 if TYPE_CHECKING:
-    from airflow.serialization.serde import U
+    from airflow_serde_polars.utils.typing import AirflowSerdeResponse
 
 _version = find_version(__file__)
 
 
-def serialize(o: object) -> tuple[U, str, int, bool]:  # pyright: ignore[reportUnknownParameterType]
+def serialize(o: object) -> AirflowSerdeResponse[tuple[str, str]]:
     import polars as pl
     import pyarrow as pa
     from airflow.utils.module_loading import qualname
@@ -20,7 +21,7 @@ def serialize(o: object) -> tuple[U, str, int, bool]:  # pyright: ignore[reportU
     if not isinstance(o, pa.Table):
         result = v1_serialize(o)
         if not result[3]:
-            return result
+            return ErrorResponse
         return ((result[0], ""), result[1], _version, True)
 
     name = qualname(o)
@@ -30,7 +31,7 @@ def serialize(o: object) -> tuple[U, str, int, bool]:  # pyright: ignore[reportU
     result = v1_serialize(o)
 
     if not result[3]:
-        return result
+        return ErrorResponse
 
     buffer: pa.Buffer = schema.serialize()
     schema_as_bytes: bytes = buffer.to_pybytes()
