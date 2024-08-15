@@ -7,7 +7,11 @@ if TYPE_CHECKING:
     from airflow.serialization.serde import U
 
 
-serializers = ["polars.dataframe.frame.DataFrame", "polars.series.series.Series"]
+serializers = [
+    "polars.dataframe.frame.DataFrame",
+    "polars.series.series.Series",
+    "pyarrow.lib.Table",
+]
 deserializers = serializers
 __version__: int
 
