@@ -1,8 +1,16 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Dict, List, Set, Tuple, Union
+import sys
+from typing import TYPE_CHECKING, Any, Union
+
+if sys.version_info < (3, 9):
+    from typing import Dict, List, Set, Tuple
+else:
+    Dict, List, Set, Tuple = dict, list, set, tuple
 
 if TYPE_CHECKING:
+    from typing import Union
+
     from typing_extensions import TypeAlias, TypeVar
 
     T = TypeVar(
