@@ -55,6 +55,9 @@ allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/airflow_serde_polars", "src/airflow/serialization/serializers"]
 
+[tool.hatch.build.targets.sdist]
+include = ["src/airflow_serde_polars", "src/airflow/serialization/serializers"]
+
 [tool.pytest.ini_options]
 addopts = "-m 'not airflow'"
 markers = [
