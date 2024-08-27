@@ -35,20 +35,21 @@ jobs:
         run: |
           uv python install ${{ matrix.python-version }}
           uv python pin ${{ matrix.python-version }}
+          uv lock
+          uv venv
 
       - name: Install dependencies
         run: |
-          export UV_PYTHON=$(uv run python -c "import sys; print(sys.executable)")
           uv pip compile pyproject.toml -o requirements.txt --extra test
           uv pip install -r requirements.txt
 
       - name: Install self
         run: |
-          export UV_PYTHON=$(uv run python -c "import sys; print(sys.executable)")
           uvx --from build pyproject-build --installer uv
           uv pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl --reinstall-package airflow-serde-polars
 
       - name: Test with pytest
         run: |
-          uv run pytest -m "airflow or not airflow"
+          source .venv/bin/activate
+          pytest -m "airflow or not airflow"
           
