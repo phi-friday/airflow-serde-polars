@@ -17,46 +17,38 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      UV_CACHE_DIR: /tmp/.uv-cache
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
+    name: check ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install rye
-        uses: phi-friday/install-rye@v2
-        id: install-rye
-        with:
-          python_version: ${{ matrix.python-version }}
-      
-      - name: prepare dependencies
-        id: prepare-dependencies
-        run: |
-          rye install uv
-          rye lock # init venv
-          rye build
+      - name: Set up uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-      - name: Load cached venv
-        id: cached-venv-dependencies
-        uses: actions/cache@v4
-        with:
-          path: .venv
-          key: venv-test-${{ runner.os }}-${{ steps.install-rye.outputs.python-version }}-${{ hashFiles('**/pyproject.toml') }}
+      - name: Set up Python ${{ matrix.python-version }}
+        id: setup-python
+        run: |
+          uv python install ${{ matrix.python-version }}
+          uv python pin ${{ matrix.python-version }}
 
       - name: Install dependencies
-        if: steps.cached-venv-dependencies.outputs.cache-hit != 'true'
         run: |
-          export UV_PYTHON=$(rye run python -c "import sys; print(sys.executable)")
+          export UV_PYTHON=$(uv run python -c "import sys; print(sys.executable)")
           uv pip compile pyproject.toml -o requirements.txt --extra test
           uv pip install -r requirements.txt
 
       - name: Install self
         run: |
-          export UV_PYTHON=$(rye run python -c "import sys; print(sys.executable)")
+          export UV_PYTHON=$(uv run python -c "import sys; print(sys.executable)")
+          uvx --from build pyproject-build --installer uv
           uv pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl --reinstall-package airflow-serde-polars
 
       - name: Test with pytest
         run: |
-          source .venv/bin/activate
-          pytest -m "airflow or not airflow"
+          uv run pytest -m "airflow or not airflow"
+          
