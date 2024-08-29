@@ -31,12 +31,6 @@ jobs:
       - name: Set up uv
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-      - name: Install rye
-        uses: phi-friday/install-rye@v2
-        id: install-rye
-        with:
-          python_version: "3.8"
-
       - name: Set up Python
         id: setup-python
         run: |
