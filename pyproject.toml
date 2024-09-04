@@ -28,7 +28,7 @@ Repository = "https://github.com/phi-friday/airflow-serde-polars"
 test = [
     # support pep440
     "apache-airflow>=2.8.1",
-    "pytest>=8.3.2",
+    "pytest>=7",
 ]
 
 [build-system]
