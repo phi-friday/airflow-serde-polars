@@ -46,7 +46,7 @@ jobs:
       - name: Install self
         run: |
           uvx --from build pyproject-build --installer uv
-          uv pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl --reinstall-package airflow-serde-polars
+          uv pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl --reinstall-package airflow-serde-polars --no-deps
 
       - name: Test with pytest
         run: |
