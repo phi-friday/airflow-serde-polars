@@ -27,12 +27,21 @@ jobs:
 
     name: check py-${{ matrix.python-version }} airflow-${{ matrix.airflow-version }}
     steps:
+      - name: check constraint
+        id: check-constraint
+        run: |
+          STATE=$(curl -LsSf "$UV_CONSTRAINT" > /dev/null && echo success || echo failure)
+          echo "state=$STATE" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v4
+        if: steps.check-constraint.outputs.state == 'success'
       
       - name: Set up uv
+        if: steps.check-constraint.outputs.state == 'success'
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
       - name: Set up Python ${{ matrix.python-version }}
+        if: steps.check-constraint.outputs.state == 'success'
         id: setup-python
         run: |
           uv python install ${{ matrix.python-version }}
@@ -41,16 +50,19 @@ jobs:
           uv venv
 
       - name: Install dependencies
+        if: steps.check-constraint.outputs.state == 'success'
         run: |
           uv pip compile pyproject.toml -o requirements.txt --extra test
           uv pip install -r requirements.txt "apache-airflow==${{ matrix.airflow-version }}"
 
       - name: Install self
+        if: steps.check-constraint.outputs.state == 'success'
         run: |
           uvx --from build pyproject-build --installer uv
           uv pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl --reinstall-package airflow-serde-polars --no-deps
 
       - name: Test with pytest
+        if: steps.check-constraint.outputs.state == 'success'
         run: |
           source .venv/bin/activate
           pytest -m "airflow or not airflow"
