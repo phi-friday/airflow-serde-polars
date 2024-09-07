@@ -39,7 +39,7 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = [
     "airflow-serde-polars[test]",
-    "ruff==0.5.7",
+    "ruff==0.6.4",
     "pre-commit>=3.5.0",
     "ipykernel>=6.29.5",
     "poethepoet>=0.27.0",
