@@ -20,14 +20,14 @@ def serde_version(request: pytest.FixtureRequest) -> int:
     return request.param
 
 
-@pytest.fixture()
+@pytest.fixture
 def serializer(serde_version: int) -> Serializer:
     from airflow_serde_polars.main import load_serializer
 
     return load_serializer(serde_version)
 
 
-@pytest.fixture()
+@pytest.fixture
 def deserializer(serde_version: int) -> Deserializer:
     from airflow_serde_polars.main import load_deserializer
 

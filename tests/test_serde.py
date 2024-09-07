@@ -7,6 +7,7 @@ from itertools import permutations
 import polars as pl
 import pyarrow as pa
 import pytest
+
 from airflow.serialization.serde import deserialize, serialize
 
 from airflow_serde_polars import load_deserializer, load_serializer
@@ -79,7 +80,7 @@ def test_serde_diff_version_error(polars_frame, versions: tuple[int, int]):
         deserializer(classname, version, value)
 
 
-@pytest.mark.airflow()
+@pytest.mark.airflow
 def test_serde_frame_airflow(polars_frame):
     value = serialize(polars_frame)
     assert isinstance(value, dict)
@@ -88,7 +89,7 @@ def test_serde_frame_airflow(polars_frame):
     assert polars_frame.equals(load)
 
 
-@pytest.mark.airflow()
+@pytest.mark.airflow
 def test_serde_series_airflow(polars_frame):
     for field in polars_frame.iter_columns():
         value = serialize(field)

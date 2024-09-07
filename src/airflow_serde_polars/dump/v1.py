@@ -15,6 +15,7 @@ def serialize(o: object) -> AirflowSerdeResult[str]:
     from io import BytesIO
 
     import polars as pl
+
     from airflow.utils.module_loading import qualname
 
     name = qualname(o)

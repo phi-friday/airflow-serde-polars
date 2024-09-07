@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     import polars as pl
+
     from airflow.serialization.serde import U
 
 

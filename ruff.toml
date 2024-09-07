@@ -31,6 +31,7 @@ fixable = [
     "PIE808",  # unnecessary-range-start
     "RUF020",  # never-union 
     "NPY201",  # numpy2-deprecation
+    "PT",
 ]
 ignore = [
     "TD",
