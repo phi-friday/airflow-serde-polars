@@ -116,6 +116,7 @@ skip-magic-trailing-comma = true
 
 [lint.isort]
 known-local-folder = ["airflow_serde_polars"]
+known-third-party = ["airflow"]
 required-imports = ["from __future__ import annotations"]
 # ruff format
 force-single-line = false

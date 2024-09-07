@@ -14,7 +14,6 @@ _version = find_version(__file__)
 def serialize(o: object) -> AirflowSerdeResult[tuple[str, str]]:
     import polars as pl
     import pyarrow as pa
-
     from airflow.utils.module_loading import qualname
 
     from airflow_serde_polars.dump.v1 import serialize as v1_serialize

@@ -7,7 +7,6 @@ from itertools import permutations
 import polars as pl
 import pyarrow as pa
 import pytest
-
 from airflow.serialization.serde import deserialize, serialize
 
 from airflow_serde_polars import load_deserializer, load_serializer
