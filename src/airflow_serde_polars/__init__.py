@@ -12,7 +12,9 @@ def __getattr__(name: str) -> Any:  # pragma: no cover
     from importlib.metadata import version
 
     if name == "__version__":
-        return version("airflow-serde-polars")
+        _version = version("airflow-serde-polars")
+        globals()["__version__"] = _version
+        return _version
 
     error_msg = f"The attribute named {name!r} is undefined."
     raise AttributeError(error_msg)
