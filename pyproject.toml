@@ -1,6 +1,6 @@
 [project]
 name = "airflow-serde-polars"
-version = "0.0.0"
+dynamic = ["version"]
 description = "Apache Airflow serialization plugin using Polars"
 authors = [{ name = "phi", email = "phi.friday@gmail.com" }]
 readme = "README.md"
@@ -32,8 +32,11 @@ test = [
 ]
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
 
 [tool.uv]
 managed = true
@@ -46,13 +49,10 @@ dev-dependencies = [
 ]
 
 [tool.poe.tasks]
-lint = ["lint:check", "lint:format"]
-"lint:check" = "ruff check src tests --fix"
-"lint:format" = "ruff format src tests"
+lint = ["_lint:check", "_lint:format"]
+"_lint:check" = "ruff check src tests --fix"
+"_lint:format" = "ruff format src tests"
 check = "pre-commit run --all-files --show-diff-on-failure"
-
-[tool.hatch.metadata]
-allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/airflow_serde_polars", "src/airflow/serialization/serializers"]
