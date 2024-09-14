@@ -93,7 +93,7 @@ ignore = [
 [lint.per-file-ignores]
 "src/airflow_serde_polars/dump/v*.py" = ["D103"]
 "src/airflow_serde_polars/load/v*.py" = ["D103"]
-"tests/**/*.py" = [
+"src/tests/**/*.py" = [
     "TCH001",
     "TCH002",
     "TCH003",
@@ -115,7 +115,7 @@ quote-style = "double"
 skip-magic-trailing-comma = true
 
 [lint.isort]
-known-local-folder = ["airflow_serde_polars"]
+known-local-folder = ["airflow_serde_polars", "tests"]
 known-third-party = ["airflow"]
 required-imports = ["from __future__ import annotations"]
 # ruff format

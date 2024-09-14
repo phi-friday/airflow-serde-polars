@@ -98,6 +98,7 @@ def test_serde_series_airflow(polars_frame):
         assert field.equals(load)
 
 
+@pytest.mark.airflow
 def test_serde_pa_table(serde_version: int, pa_table: pa.Table):
     if serde_version < 2:
         pytest.skip("pyarrow.Table is not supported in this version")

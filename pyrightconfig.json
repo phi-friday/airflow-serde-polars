@@ -2,7 +2,7 @@
     "include": [
         "src/airflow_serde_polars",
         "src/airflow",
-        "tests"
+        "src/tests"
     ],
     "typeCheckingMode": "strict",
     "pythonVersion": "3.8",
@@ -19,6 +19,4 @@
     "reportPrivateUsage": false,
     "reportUnnecessaryTypeIgnoreComment": true,
     "reportImplicitOverride": true,
-    "venv": ".venv",
-    "venvPath": "."
 }
