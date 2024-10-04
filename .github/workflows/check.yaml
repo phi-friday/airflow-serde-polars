@@ -59,7 +59,7 @@ jobs:
         if: steps.check-constraint.outputs.state == 'success'
         run: |
           uvx --from build pyproject-build --installer uv
-          uv pip install dist/airflow_serde_polars-0.0.0-py3-none-any.whl --reinstall-package airflow-serde-polars --no-deps
+          uv pip install dist/airflow_serde_polars-*.whl --reinstall-package airflow-serde-polars --no-deps
 
       - name: Test with pytest
         if: steps.check-constraint.outputs.state == 'success'
