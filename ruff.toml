@@ -1,6 +1,6 @@
 line-length = 88
 unsafe-fixes = true
-target-version = "py38"
+target-version = "py39"
 
 [lint]
 select = ["ALL"]

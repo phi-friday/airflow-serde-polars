@@ -5,7 +5,7 @@
         "src/tests"
     ],
     "typeCheckingMode": "strict",
-    "pythonVersion": "3.8",
+    "pythonVersion": "3.9",
     "pythonPlatform": "Linux",
     "reportMissingTypeStubs": false,
     "reportInconsistentConstructor": false,

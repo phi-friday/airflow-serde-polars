@@ -1,12 +1,8 @@
 from __future__ import annotations  # noqa: A005
 
-import sys
 from typing import TYPE_CHECKING, Any, Union
 
-if sys.version_info < (3, 9):
-    from typing import Dict, List, Set, Tuple
-else:
-    Dict, List, Set, Tuple = dict, list, set, tuple
+Dict, List, Set, Tuple = dict, list, set, tuple
 
 if TYPE_CHECKING:
     from typing import Union
@@ -23,13 +19,13 @@ if TYPE_CHECKING:
         "T2", infer_variance=True, bound="bool | float | int | str", default=Any
     )
 
-    AirflowSerdeResult: TypeAlias = Tuple[T, str, int, bool]
+    AirflowSerdeResult: TypeAlias = tuple[T, str, int, bool]
     AirflowSerdeType: TypeAlias = Union[
         T2,
-        Dict[Any, "AirflowSerdeType[T2]"],
-        List["AirflowSerdeType[T2]"],
-        Tuple["AirflowSerdeType[T2]", ...],
-        Set["AirflowSerdeType[T2]"],
+        dict[Any, "AirflowSerdeType[T2]"],
+        list["AirflowSerdeType[T2]"],
+        tuple["AirflowSerdeType[T2]", ...],
+        set["AirflowSerdeType[T2]"],
     ]
 
 ErrorResult: AirflowSerdeResult[Any] = ("", "", 0, False)
