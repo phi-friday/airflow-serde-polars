@@ -4,7 +4,7 @@ from typing import Any
 
 from airflow_serde_polars.main import load_deserializer, load_serializer
 
-__all__ = ["load_serializer", "load_deserializer"]
+__all__ = ["load_deserializer", "load_serializer"]
 __version__: str
 
 

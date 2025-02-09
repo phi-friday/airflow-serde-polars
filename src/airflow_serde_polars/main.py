@@ -17,7 +17,7 @@ if TYPE_CHECKING:
         ) -> pl.DataFrame | pl.Series: ...
 
 
-__all__ = ["load_serializer", "load_deserializer"]
+__all__ = ["load_deserializer", "load_serializer"]
 
 
 def load_serializer(version: float | str) -> Serializer:

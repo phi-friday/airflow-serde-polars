@@ -50,8 +50,8 @@ dev-dependencies = [
 
 [tool.poe.tasks]
 lint = ["_lint:check", "_lint:format"]
-"_lint:check" = "ruff check src tests --fix"
-"_lint:format" = "ruff format src tests"
+"_lint:check" = "ruff check src --fix"
+"_lint:format" = "ruff format src"
 check = "pre-commit run --all-files --show-diff-on-failure"
 
 [tool.hatch.build.targets.wheel]

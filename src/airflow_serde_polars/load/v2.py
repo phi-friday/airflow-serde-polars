@@ -31,8 +31,7 @@ def deserialize(  # pyright: ignore[reportUnknownParameterType]
 
     if not isinstance(data[0], str):
         error_msg = (
-            f"serialized {classname} has wrong data type "
-            f"tuple[{type(data[0])}, ...]"
+            f"serialized {classname} has wrong data type tuple[{type(data[0])}, ...]"
         )
         raise TypeError(error_msg)
 
