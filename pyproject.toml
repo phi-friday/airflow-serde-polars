@@ -24,11 +24,18 @@ classifiers = [
 [project.urls]
 Repository = "https://github.com/phi-friday/airflow-serde-polars"
 
-[project.optional-dependencies]
+[dependency-groups]
 test = [
     # support pep440
     "apache-airflow>=2.8.1",
     "pytest>=7",
+]
+dev = [
+    { include-group = "test"},
+    "ruff==0.9.5",
+    "pre-commit>=3.5.0",
+    "ipykernel>=6.29.5",
+    "poethepoet>=0.27.0",
 ]
 
 [build-system]
@@ -40,13 +47,7 @@ source = "vcs"
 
 [tool.uv]
 managed = true
-dev-dependencies = [
-    "airflow-serde-polars[test]",
-    "ruff==0.9.5",
-    "pre-commit>=3.5.0",
-    "ipykernel>=6.29.5",
-    "poethepoet>=0.27.0",
-]
+default-groups = ["dev"]
 
 [tool.poe.tasks]
 lint = ["_lint:check", "_lint:format"]
