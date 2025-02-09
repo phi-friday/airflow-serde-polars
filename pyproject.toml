@@ -4,7 +4,7 @@ dynamic = ["version"]
 description = "Apache Airflow serialization plugin using Polars"
 authors = [{ name = "phi", email = "phi.friday@gmail.com" }]
 readme = "README.md"
-requires-python = ">= 3.8"
+requires-python = ">= 3.9"
 dependencies = [
     "polars[pyarrow]>=1.0.0",
     "typing-extensions>=4.4",
@@ -13,7 +13,6 @@ dependencies = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
