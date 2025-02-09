@@ -52,8 +52,7 @@ jobs:
       - name: Install dependencies
         if: steps.check-constraint.outputs.state == 'success'
         run: |
-          uv export --no-emit-workspace --no-emit-project --no-header --no-editable --no-hashes --group test -o requirements.txt
-          uv pip install -r requirements.txt "apache-airflow==${{ matrix.airflow-version }}"
+          uv pip install -r pyproject.toml pytest "apache-airflow==${{ matrix.airflow-version }}"
 
       - name: Install self
         if: steps.check-constraint.outputs.state == 'success'
