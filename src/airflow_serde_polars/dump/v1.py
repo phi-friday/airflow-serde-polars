@@ -12,10 +12,10 @@ _version = find_version(__file__)
 
 
 def serialize(o: object) -> AirflowSerdeResult[str]:
-    from io import BytesIO
+    from io import BytesIO  # noqa: PLC0415
 
-    import polars as pl
-    from airflow.utils.module_loading import qualname
+    import polars as pl  # noqa: PLC0415
+    from airflow.utils.module_loading import qualname  # noqa: PLC0415
 
     name = qualname(o)
 

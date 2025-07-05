@@ -12,11 +12,11 @@ _version = find_version(__file__)
 
 
 def serialize(o: object) -> AirflowSerdeResult[tuple[str, str]]:
-    import polars as pl
-    import pyarrow as pa
-    from airflow.utils.module_loading import qualname
+    import polars as pl  # noqa: PLC0415
+    import pyarrow as pa  # noqa: PLC0415
+    from airflow.utils.module_loading import qualname  # noqa: PLC0415
 
-    from airflow_serde_polars.dump.v1 import serialize as v1_serialize
+    from airflow_serde_polars.dump.v1 import serialize as v1_serialize  # noqa: PLC0415
 
     if not isinstance(o, pa.Table):
         result = v1_serialize(o)

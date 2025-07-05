@@ -17,8 +17,8 @@ __version__: int
 
 
 def serialize(o: object) -> tuple[U, str, int, bool]:  # noqa: D103 # pyright: ignore[reportUnknownParameterType]
-    from airflow_serde_polars import load_serializer
-    from airflow_serde_polars.utils.parse import get_latest_version
+    from airflow_serde_polars import load_serializer  # noqa: PLC0415
+    from airflow_serde_polars.utils.parse import get_latest_version  # noqa: PLC0415
 
     latest_version = get_latest_version()
     serializer = load_serializer(latest_version)
@@ -26,7 +26,7 @@ def serialize(o: object) -> tuple[U, str, int, bool]:  # noqa: D103 # pyright: i
 
 
 def deserialize(classname: str, version: int, data: object) -> pl.DataFrame | pl.Series:  # noqa: D103
-    from airflow_serde_polars import load_deserializer
+    from airflow_serde_polars import load_deserializer  # noqa: PLC0415
 
     deserializer = load_deserializer(version)
     return deserializer(classname, version, data)
@@ -34,7 +34,7 @@ def deserialize(classname: str, version: int, data: object) -> pl.DataFrame | pl
 
 def __getattr__(name: str) -> Any:  # pragma: no cover
     if name == "__version__":
-        from airflow_serde_polars.utils.parse import get_latest_version
+        from airflow_serde_polars.utils.parse import get_latest_version  # noqa: PLC0415
 
         return get_latest_version()
 

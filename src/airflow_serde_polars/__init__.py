@@ -9,7 +9,7 @@ __version__: str
 
 
 def __getattr__(name: str) -> Any:  # pragma: no cover
-    from importlib.metadata import version
+    from importlib.metadata import version  # noqa: PLC0415
 
     if name == "__version__":
         _version = version("airflow-serde-polars")

@@ -20,9 +20,9 @@ def deserialize(classname: str, version: int, data: object) -> pl.DataFrame | pl
         error_msg = f"serialized {classname} has wrong data type {type(data)}"
         raise TypeError(error_msg)
 
-    from io import BytesIO
+    from io import BytesIO  # noqa: PLC0415
 
-    import polars as pl
+    import polars as pl  # noqa: PLC0415
 
     with BytesIO(bytes.fromhex(data)) as io:
         frame = pl.read_parquet(io)

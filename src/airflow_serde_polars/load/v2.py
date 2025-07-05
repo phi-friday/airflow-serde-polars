@@ -20,7 +20,7 @@ def deserialize(  # pyright: ignore[reportUnknownParameterType]
         raise TypeError(error_msg)
 
     if version != _version:
-        from airflow_serde_polars import load_deserializer
+        from airflow_serde_polars import load_deserializer  # noqa: PLC0415
 
         lower_deserializer = load_deserializer(version)
         return lower_deserializer(classname, version, data)
@@ -42,10 +42,10 @@ def deserialize(  # pyright: ignore[reportUnknownParameterType]
         )
         raise TypeError(error_msg)
 
-    from io import BytesIO
+    from io import BytesIO  # noqa: PLC0415
 
-    import polars as pl
-    import pyarrow as pa
+    import polars as pl  # noqa: PLC0415
+    import pyarrow as pa  # noqa: PLC0415
 
     with BytesIO(bytes.fromhex(data[0])) as io:
         frame = pl.read_parquet(io)
